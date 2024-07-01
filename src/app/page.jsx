@@ -55,12 +55,12 @@ export default function Home() {
     }
   }, []);
 
+  console.log(`profile: ${profile}`)
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       Hi!
-      {profile && (
-        <>
-        <div>
+
+      <div>
         {profile.picture && <Image
           src={profile.picture}
           alt={profile.name}
@@ -70,8 +70,6 @@ export default function Home() {
         <div>Email: {profile.email}</div>
         <div>Name: {profile.name}</div>
       </div>
-        </>
-      )}
     </main>
   );
 }
