@@ -28,6 +28,15 @@ const initialLiff = async () => {
     .then(() => {
       const idToken = liff.getDecodedIDToken();
       console.log(idToken); // print decoded idToken object
+
+      const getAccessToken = liff.getAccessToken()
+      console.log(`getAccessToken: ${getAccessToken}`)
+
+      const profile = liff.getProfile()
+      console.log(`profile: ${profile}`)
+
+      const profilePlus = liff.getProfilePlus()
+      console.log(`profilePlus: ${profilePlus}`)
     });
   } catch (err) {
     console.error(err);
