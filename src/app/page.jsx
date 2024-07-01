@@ -7,33 +7,29 @@ import liff from '@line/liff';
 const liffId = process.env.NEXT_PUBLIC_LIFF_ID;
 
 export default function Home() {
-  const [profile, setProfile] = useState()
+  const [profile, setProfile] = useState();
+  const [token, setToken] = useState();
 
   useEffect( async () => {
     if (typeof window !== 'undefined') {
       try {
-        let context
         await liff.init({
           liffId: liffId,
-        })
-
-        await liff
-        .getProfile()
-        .then((profile) => {
-          context = {...profile};
         })
 
         if (!liff.isLoggedIn()) {
           liff.login()
         }
 
+        await liff.getProfile()
+        .then((profile) => {
+          setProfile(profile);
+        })
+
         await liff.init({
           liffId: liffId,
         }).then(() => {
-          setProfile({
-            ...context,
-            email: liff.getDecodedIDToken()
-          });
+          setToken(liff.getDecodedIDToken());
         });
       } catch (err) {
         console.error(err);
@@ -58,7 +54,7 @@ export default function Home() {
           priority
         />
         <div>UserId: {profile.userId}</div>
-        <div>Email: {profile.email}</div>
+        <div>Email: {token.email?? "-"}</div>
         <div>DisplayName: {profile.displayName}</div>
         <div>StatusMessage: {profile.statusMessage}</div>
       </div></>}
