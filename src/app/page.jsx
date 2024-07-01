@@ -12,15 +12,17 @@ export default function Home() {
   useEffect( async () => {
     if (typeof window !== 'undefined') {
       try {
-        await liff.init({
+        let initLiff = await liff.init({
           liffId: liffId,
         })
 
-        if (!liff.isLoggedIn()) {
-          liff.login().then(() => {
-            setProfile(liff.getDecodedIDToken());
-          });
+        if (!initLiff.isLoggedIn()) {
+          initLiff.login()
         }
+
+        await initLiff.then(() => {
+          setProfile(initLiff.getDecodedIDToken());
+        });
       } catch (err) {
         console.error(err);
       }
