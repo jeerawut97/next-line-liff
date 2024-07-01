@@ -13,13 +13,13 @@ export default function Home() {
   useEffect( async () => {
     if (typeof window !== 'undefined') {
       try {
-        liff.getProfile()
-        .then((profile) => {
-          setProfile(profile);
-        })
-
         await liff.init({
           liffId: liffId,
+        })
+
+        await liff.getProfile()
+        .then((profile) => {
+          setProfile(profile);
         })
 
         if (!liff.isLoggedIn()) {
@@ -42,7 +42,7 @@ export default function Home() {
   
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      {!profile && <p>Hi!</p>}
+      {!profile && <div><p>Hi!</p></div>}
       {profile && <><div>
         <p>Hi!</p>
         <Image
