@@ -57,6 +57,16 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       Hi!
+      <div>
+        {profile.picture && <Image
+          src={profile.picture}
+          alt={profile.name}
+          width={500}
+          height={500}
+        />}
+        <div>Email: {profile.email}</div>
+        <div>Name: {profile.name}</div>
+      </div>
       {/* {profile && (
         <>
         <div>
