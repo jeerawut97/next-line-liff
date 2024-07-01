@@ -5,16 +5,12 @@ import liff from '@line/liff';
 
 const liffId = process.env.NEXT_PUBLIC_LIFF_ID;
 
-const initialLiff = () => {
+const initialLiff = async () => {
   try {
-    liff.init({
+    await liff.init({
       liffId: liffId,
       withLoginOnExternalBrowser: true,
     });
-
-    if (!liff.isLoggedIn()) {
-      liff.login();
-    }
 
     // console.log(liff.getLanguage());
     // console.log(liff.getVersion());
@@ -23,7 +19,7 @@ const initialLiff = () => {
     // console.log(liff.getOS());
     // console.log(liff.getLineVersion());
 
-    liff.init({
+    await liff.init({
       liffId: liffId, // Use own liffId
     })
     .then(() => {
