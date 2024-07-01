@@ -32,12 +32,12 @@ export default function Home() {
       Hi!
       {!profile && <p>Hi!</p>}
       {profile && <><div>
-        {profile.picture && <Image
+        {/* {profile.picture && <Image
           src={profile.picture}
           alt={profile.name}
           width={500}
           height={500}
-        />}
+        />} */}
         <div>Email: {profile.email}</div>
         <div>Name: {profile.name}</div>
       </div></>}
