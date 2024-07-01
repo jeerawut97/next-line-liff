@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image'
 import liff from '@line/liff';
 
 const liffId = process.env.NEXT_PUBLIC_LIFF_ID;
@@ -29,6 +30,7 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       {!profile && <p>Hi!</p>}
       {profile && <><div>
+        <p>Hi!</p>
         <Image
           src={profile.picture}
           alt={profile.name}
