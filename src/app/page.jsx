@@ -13,6 +13,11 @@ export default function Home() {
   useEffect( async () => {
     if (typeof window !== 'undefined') {
       try {
+        liff.getProfile()
+        .then((profile) => {
+          setProfile(profile);
+        })
+
         await liff.init({
           liffId: liffId,
         })
@@ -20,11 +25,6 @@ export default function Home() {
         if (!liff.isLoggedIn()) {
           liff.login()
         }
-
-        await liff.getProfile()
-        .then((profile) => {
-          setProfile(profile);
-        })
 
         await liff.init({
           liffId: liffId,
@@ -39,6 +39,7 @@ export default function Home() {
     }
   }, []);
 
+  
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       {!profile && <p>Hi!</p>}
@@ -54,7 +55,7 @@ export default function Home() {
           priority
         />
         <div>UserId: {profile.userId}</div>
-        <div>Email: {token.email?? "-"}</div>
+        <div>Email: {token?.email?? "-"}</div>
         <div>DisplayName: {profile.displayName}</div>
         <div>StatusMessage: {profile.statusMessage}</div>
       </div></>}
