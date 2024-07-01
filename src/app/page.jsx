@@ -6,48 +6,45 @@ import Head from 'next/head';
 
 const liffId = process.env.NEXT_PUBLIC_LIFF_ID;
 
-const getProfile = async () => {
+const initialLiff = async () => {
   try {
     await liff.init({
       liffId: liffId, // Use own liffId
       withLoginOnExternalBrowser: true, // Enable automatic login process
     });
-    await liff.ready
-    return liff.getProfile()
+    console.log(liff.getLanguage());
+    console.log(liff.getVersion());
+    console.log(liff.isInClient());
+    console.log(liff.isLoggedIn());
+    console.log(liff.getOS());
+    console.log(liff.getLineVersion());
+
+    await liff.init({
+      liffId: liffId, // Use own liffId
+    })
+    .then(() => {
+      const idToken = liff.getDecodedIDToken();
+      console.log(idToken); // print decoded idToken object
+    });
   } catch (err) {
     console.error(err);
   }
 };
 
 export default function Home() {
-  const [profile, setProfile] = useState({})
+  // const [profile, setProfile] = useState({})
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      setProfile(getProfile());
-      console.log('if')
+      initialLiff()
     } else {
-      console.log('else')
+      console.log('window undefined')
     }
   }, []);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <section>
-      <Head>
-        <title>My Profile</title>
-      </Head>
-      <h1>Profile</h1>
-      <div>
-        {profile.pictureUrl && <Image
-          src={profile.pictureUrl}
-          alt={profile.displayName}
-          width={500}
-          height={500}
-        />}
-        <div>Name: {profile.displayName}</div>
-      </div>
-    </section>
+      Hi!
     </main>
   );
 }
