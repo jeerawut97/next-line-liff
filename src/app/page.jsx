@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import liff from '@line/liff';
-import Head from 'next/head';
 
 const liffId = process.env.NEXT_PUBLIC_LIFF_ID;
 
@@ -10,8 +9,12 @@ const initialLiff = async () => {
   try {
     await liff.init({
       liffId: liffId, // Use own liffId
-      withLoginOnExternalBrowser: true, // Enable automatic login process
     });
+
+    if (!liff.isLoggedIn()) {
+      liff.login();
+    }
+
     console.log(liff.getLanguage());
     console.log(liff.getVersion());
     console.log(liff.isInClient());
