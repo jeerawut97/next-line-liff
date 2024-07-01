@@ -14,10 +14,13 @@ export default function Home() {
       try {
         await liff.init({
           liffId: liffId,
-          withLoginOnExternalBrowser: true,
-        }).then(() => {
-          setProfile(liff.getDecodedIDToken());
-        });
+        })
+
+        if (!liff.isLoggedIn()) {
+          liff.login().then(() => {
+            setProfile(liff.getDecodedIDToken());
+          });
+        }
       } catch (err) {
         console.error(err);
       }
