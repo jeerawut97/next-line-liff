@@ -34,8 +34,11 @@ export default function Home() {
         <Image
           src={profile.picture}
           alt={profile.name}
-          width={500}
-          height={500}
+          width={0}
+          height={0}
+          sizes="200vw"
+          style={{ width: '100%' }}
+          priority
         />
         <div>Email: {profile.email}</div>
         <div>Name: {profile.name}</div>
