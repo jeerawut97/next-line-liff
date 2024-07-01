@@ -5,9 +5,9 @@ import liff from '@line/liff';
 
 const liffId = process.env.NEXT_PUBLIC_LIFF_ID;
 
-const initialLiff = async () => {
+const initialLiff = () => {
   try {
-    await liff.init({
+    liff.init({
       liffId: liffId,
       withLoginOnExternalBrowser: true,
     });
@@ -16,14 +16,14 @@ const initialLiff = async () => {
       liff.login();
     }
 
-    console.log(liff.getLanguage());
-    console.log(liff.getVersion());
-    console.log(liff.isInClient());
-    console.log(liff.isLoggedIn());
-    console.log(liff.getOS());
-    console.log(liff.getLineVersion());
+    // console.log(liff.getLanguage());
+    // console.log(liff.getVersion());
+    // console.log(liff.isInClient());
+    // console.log(liff.isLoggedIn());
+    // console.log(liff.getOS());
+    // console.log(liff.getLineVersion());
 
-    await liff.init({
+    liff.init({
       liffId: liffId, // Use own liffId
     })
     .then(() => {
@@ -55,12 +55,13 @@ export default function Home() {
     }
   }, []);
 
-  console.log(`profile: ${profile}`)
+  console.log(`profile: ${profile.picture}`)
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       Hi!
-
-      <div>
+      {profile && (
+        <>
+        <div>
         {profile.picture && <Image
           src={profile.picture}
           alt={profile.name}
@@ -70,6 +71,8 @@ export default function Home() {
         <div>Email: {profile.email}</div>
         <div>Name: {profile.name}</div>
       </div>
+        </>
+      )}
     </main>
   );
 }
