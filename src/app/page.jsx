@@ -6,8 +6,7 @@ import liff from '@line/liff';
 const liffId = process.env.NEXT_PUBLIC_LIFF_ID;
 
 export default function Home() {
-  const [profile, setProfile] = useState(null)
-  console.log(`before profile: ${profile}`)
+  const [profile, setProfile] = useState()
 
   useEffect( async () => {
     if (typeof window !== 'undefined') {
@@ -26,18 +25,16 @@ export default function Home() {
     }
   }, []);
 
-  console.log(`after profile: ${profile}`)
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      Hi!
       {!profile && <p>Hi!</p>}
       {profile && <><div>
-        {/* {profile.picture && <Image
+        <Image
           src={profile.picture}
           alt={profile.name}
           width={500}
           height={500}
-        />} */}
+        />
         <div>Email: {profile.email}</div>
         <div>Name: {profile.name}</div>
       </div></>}
