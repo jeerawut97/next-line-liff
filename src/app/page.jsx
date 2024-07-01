@@ -5,8 +5,6 @@ import liff from '@line/liff';
 
 const liffId = process.env.NEXT_PUBLIC_LIFF_ID;
 
-const [profile, setProfile] = useState({})
-
 const initialLiff = async () => {
   try {
     await liff.init({
@@ -25,12 +23,9 @@ const initialLiff = async () => {
       liffId: liffId, // Use own liffId
     })
     .then(() => {
-      const token = liff.getDecodedIDToken();
-      console.log(token); // print decoded token object
-
-      setProfile(token)
-
-      console.log(`profile: ${profile}`)
+      liff.getDecodedIDToken();
+      // const token = liff.getDecodedIDToken();
+      // console.log(token); // print decoded token object
 
       // const getAccessToken = liff.getAccessToken()
       // console.log(`getAccessToken: ${getAccessToken}`)
@@ -47,9 +42,13 @@ const initialLiff = async () => {
 };
 
 export default function Home() {
+  const [profile, setProfile] = useState({})
+  console.log(`before profile: ${profile}`)
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      initialLiff()
+      setProfile(initialLiff())
+      console.log(`after profile: ${profile}`)
     } else {
       console.log('window undefined')
     }
@@ -58,7 +57,7 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       Hi!
-      {profile && (
+      {/* {profile && (
         <>
         <div>
         {profile.picture && <Image
@@ -71,7 +70,7 @@ export default function Home() {
         <div>Name: {profile.name}</div>
       </div>
         </>
-      )}
+      )} */}
     </main>
   );
 }
