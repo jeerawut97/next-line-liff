@@ -8,7 +8,8 @@ const liffId = process.env.NEXT_PUBLIC_LIFF_ID;
 const initialLiff = async () => {
   try {
     await liff.init({
-      liffId: liffId, // Use own liffId
+      liffId: liffId,
+      withLoginOnExternalBrowser: true,
     });
 
     if (!liff.isLoggedIn()) {
@@ -26,17 +27,17 @@ const initialLiff = async () => {
       liffId: liffId, // Use own liffId
     })
     .then(() => {
-      const idToken = liff.getDecodedIDToken();
-      console.log(idToken); // print decoded idToken object
+      const token = liff.getDecodedIDToken();
+      console.log(token); // print decoded token object
 
-      const getAccessToken = liff.getAccessToken()
-      console.log(`getAccessToken: ${getAccessToken}`)
+      // const getAccessToken = liff.getAccessToken()
+      // console.log(`getAccessToken: ${getAccessToken}`)
 
-      const profile = liff.getProfile()
-      console.log(`profile: ${profile}`)
+      // const profile = liff.getProfile()
+      // console.log(`profile: ${profile}`)
 
-      const profilePlus = liff.getProfilePlus()
-      console.log(`profilePlus: ${profilePlus}`)
+      // const profilePlus = liff.getProfilePlus()
+      // console.log(`profilePlus: ${profilePlus}`)
     });
   } catch (err) {
     console.error(err);
@@ -44,11 +45,11 @@ const initialLiff = async () => {
 };
 
 export default function Home() {
-  // const [profile, setProfile] = useState({})
+  const [profile, setProfile] = useState({})
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      initialLiff()
+      setProfile(initialLiff().token)
     } else {
       console.log('window undefined')
     }
@@ -57,6 +58,20 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       Hi!
+      {profile && (
+        <>
+        <div>
+        {profile.picture && <Image
+          src={profile.picture}
+          alt={profile.name}
+          width={500}
+          height={500}
+        />}
+        <div>Email: {profile.email}</div>
+        <div>Name: {profile.name}</div>
+      </div>
+        </>
+      )}
     </main>
   );
 }
