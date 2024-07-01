@@ -12,8 +12,15 @@ export default function Home() {
   useEffect( async () => {
     if (typeof window !== 'undefined') {
       try {
+        let context
         await liff.init({
           liffId: liffId,
+        })
+
+        await liff
+        .getProfile()
+        .then((profile) => {
+          context = {...profile};
         })
 
         if (!liff.isLoggedIn()) {
@@ -23,7 +30,10 @@ export default function Home() {
         await liff.init({
           liffId: liffId,
         }).then(() => {
-          setProfile(liff.getDecodedIDToken());
+          setProfile({
+            ...context,
+            email: liff.getDecodedIDToken()
+          });
         });
       } catch (err) {
         console.error(err);
@@ -39,16 +49,18 @@ export default function Home() {
       {profile && <><div>
         <p>Hi!</p>
         <Image
-          src={profile.picture}
-          alt={profile.name}
+          src={profile.pictureUrl}
+          alt={profile.displayName}
           width={0}
           height={0}
           sizes="200vw"
           style={{ width: '100%' }}
           priority
         />
+        <div>UserId: {profile.userId}</div>
         <div>Email: {profile.email}</div>
-        <div>Name: {profile.name}</div>
+        <div>DisplayName: {profile.displayName}</div>
+        <div>StatusMessage: {profile.statusMessage}</div>
       </div></>}
     </main>
   );
