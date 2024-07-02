@@ -15,6 +15,7 @@ export default function Home() {
       try {
         await liff.init({
           liffId: liffId,
+          withLoginOnExternalBrowser: true,
         })
 
         await liff.getProfile()
